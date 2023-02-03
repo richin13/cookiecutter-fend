@@ -1,0 +1,11 @@
+{
+  "author_full_name": "Ricardo Madriz",
+  "author_email": "richin13 [at] gmail [dot] com",
+  "project_name": "QueueUnderflow",
+  "repo_name": "queue_underflow",
+  "backend_app_name": "backend",
+  "frontend_app_name": "frontend",
+  "_copy_without_render": [
+    "**/__init__.py"
+  ]
+}

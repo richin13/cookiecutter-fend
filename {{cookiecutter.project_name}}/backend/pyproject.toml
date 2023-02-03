@@ -1,0 +1,23 @@
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "{{cookiecutter.backend_app_name}}"
+version = "0.1.0"
+description = "{{cookiecutter.project_name}} backend application built with Flask"
+authors = ["{{cookiecutter.author_full_name}} {{cookiecutter.author_email}}"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+flask = "^2.2"
+
+[tool.poetry.group.dev.dependencies]
+black = "~22"
+docformatter = "~1"
+isort = "~5"
+mypy = "~0"
+pre-commit = "~3"
+ruff = "~0"
