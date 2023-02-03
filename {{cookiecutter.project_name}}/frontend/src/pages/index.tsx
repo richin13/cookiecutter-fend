@@ -46,11 +46,11 @@ export default function Home(props: PageProps) {
         </div>
 
         <div>
-          <p style={{ display: "block" }}>
+          <div style={{ display: "block" }}>
             <h2 className={inter.className}>
               Connection with the API is {props.connection_ok ? "OK" : "Not OK"}
             </h2>
-          </p>
+          </div>
           <code className={[styles.code, styles.center].join(" ")}>
             {props.response}
           </code>
