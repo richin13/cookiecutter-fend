@@ -15,11 +15,21 @@ cd "{{cookiecutter.backend_app_name}}/" && \
   git init && \
   git add . && \
   git commit -m "Initial commit" && \
+  make setup && \
+  cd ".."
+
+info "Creating frontend app git repo"
+cd "{{cookiecutter.frontend_app_name}}/" && \
+  git init && \
+  git add . && \
+  git commit -m "Initial commit" && \
+  make setup && \
   cd ".."
 
 info "Setting up parent git repo with submodules"
 git init && \
   git submodule add "./{{cookiecutter.backend_app_name}}" && \
+  git submodule add "./{{cookiecutter.frontend_app_name}}" && \
   git add . && \
   git commit -m "Initial commit"
 

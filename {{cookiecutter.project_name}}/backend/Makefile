@@ -5,9 +5,5 @@ help: ## Print available targets and their help messages
 
 .PHONY: setup
 setup: ## Install the dependencies using poetry and enables pre-commit hooks
-	poetry install
-	poetry run pre-commit install
-
-.PHONY: build
-build: ## Build the docker image locally
-	docker build -t backend:latest .
+	@poetry install
+	@poetry run pre-commit install
