@@ -28,4 +28,6 @@ ENTRYPOINT [ "npm", "run" ]
 #-----------------------------------------------------------------------------#
 FROM base AS development
 
+COPY --chown=node:node .env.development .
+
 CMD ["dev"]

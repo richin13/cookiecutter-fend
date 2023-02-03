@@ -122,7 +122,7 @@ export default function Home(props: PageProps) {
 export const getServerSideProps: GetServerSideProps<PageProps> = async (
   _: GetServerSidePropsContext
 ) => {
-  const req = await fetch("http://nginx/api/");
+  const req = await fetch(`${process.env.API_BASE_URL}/`);
   const _props: PageProps = {
     connection_ok: req.status === 200,
     response: await req.text(),
