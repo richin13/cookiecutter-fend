@@ -1,11 +1,17 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "@next/font/google";
+import styles from "@/styles/Home.module.css";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+type PageProps = {
+  connection_ok: boolean;
+  response: string;
+};
+
+export default function Home(props: PageProps) {
   return (
     <>
       <Head>
@@ -26,7 +32,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              By{' '}
+              By{" "}
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
@@ -39,24 +45,15 @@ export default function Home() {
           </div>
         </div>
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
+        <div>
+          <p style={{ display: "block" }}>
+            <h2 className={inter.className}>
+              Connection with the API is {props.connection_ok ? "OK" : "Not OK"}
+            </h2>
+          </p>
+          <code className={[styles.code, styles.center].join(" ")}>
+            {props.response}
+          </code>
         </div>
 
         <div className={styles.grid}>
@@ -119,5 +116,18 @@ export default function Home() {
         </div>
       </main>
     </>
-  )
+  );
 }
+
+export const getServerSideProps: GetServerSideProps<PageProps> = async (
+  _: GetServerSidePropsContext
+) => {
+  const req = await fetch("http://nginx/api/");
+  const _props: PageProps = {
+    connection_ok: req.status === 200,
+    response: await req.text(),
+  };
+  return {
+    props: _props, // will be passed to the page component as props
+  };
+};
