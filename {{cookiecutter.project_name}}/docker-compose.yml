@@ -9,28 +9,28 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./db/postgresql:/var/lib/postgresql
-  backend:
+  {{cookiecutter.backend_app_name}}:
     restart: "no"
     build:
-      context: ./backend
+      context: ./{{cookiecutter.backend_app_name}}
       target: development
     environment:
       PYTHONUNBUFFERED: "1"
       FLASK_DEBUG: "1"
     volumes:
-      - ./backend:/home/docker_user/src
+      - ./{{cookiecutter.backend_app_name}}:/home/docker_user/src
     depends_on:
       - db
-  frontend:
+  {{cookiecutter.frontend_app_name}}:
     restart: "no"
     build:
-      context: ./frontend
+      context: ./{{cookiecutter.frontend_app_name}}
       target: development
     volumes:
       - /home/node/src/node_modules
-      - ./frontend:/home/node/src
+      - ./{{cookiecutter.frontend_app_name}}:/home/node/src
     depends_on:
-      - backend
+      - {{cookiecutter.backend_app_name}}
   nginx:
     restart: "no"
     build: ./nginx
@@ -39,5 +39,5 @@ services:
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
-      - backend
-      - frontend
+      - {{cookiecutter.backend_app_name}}
+      - {{cookiecutter.frontend_app_name}}

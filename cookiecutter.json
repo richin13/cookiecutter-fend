@@ -8,7 +8,6 @@
   "_copy_without_render": [
     "**/__init__.py",
     "**/*.js",
-    "**/*.json",
     "**/*.ts",
     "**/*.tsx"
   ]
