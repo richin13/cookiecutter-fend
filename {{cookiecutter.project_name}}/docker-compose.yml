@@ -1,6 +1,7 @@
 version: '3'
 services:
-  db:
+{% if cookiecutter.setup_postgres_database == 'y' %}
+  postgres:
     image: postgres:15.1
     environment:
       PGDATA: /var/lib/postgresql/local_data
@@ -8,7 +9,7 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - ./db/postgresql:/var/lib/postgresql
+      - ./db/postgresql:/var/lib/postgresql{% endif %}
   {{cookiecutter.backend_app_name}}:
     restart: "no"
     build:
@@ -19,8 +20,9 @@ services:
       FLASK_DEBUG: "1"
     volumes:
       - ./{{cookiecutter.backend_app_name}}:/home/docker_user/src
+{% if cookiecutter.setup_postgres_database == 'y' %}
     depends_on:
-      - db
+      {% if cookiecutter.setup_postgres_database == 'y' %}- postgres{% endif %}{% endif %}
   {{cookiecutter.frontend_app_name}}:
     restart: "no"
     build:
