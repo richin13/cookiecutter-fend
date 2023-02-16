@@ -6,6 +6,7 @@
   "backend_app_name": "backend",
   "frontend_app_name": "frontend",
   "setup_postgres_database": "y",
+  "setup_mongo_database": "y",
   "_copy_without_render": [
     "**/__init__.py",
     "**/*.js",

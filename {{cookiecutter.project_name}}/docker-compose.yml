@@ -10,6 +10,15 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - ./db/postgresql:/var/lib/postgresql{% endif %}
+{% if cookiecutter.setup_mongo_database == 'y' %}
+  mongo:
+    image: mongo:6.0-jammy
+    environment:
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./db/mongodb:/data/db{% endif %}
   {{cookiecutter.backend_app_name}}:
     restart: "no"
     build:
@@ -20,9 +29,10 @@ services:
       FLASK_DEBUG: "1"
     volumes:
       - ./{{cookiecutter.backend_app_name}}:/home/docker_user/src
-{% if cookiecutter.setup_postgres_database == 'y' %}
+{% if cookiecutter.setup_postgres_database == 'y' or cookiecutter.setup_mongo_database == 'y' %}
     depends_on:
-      {% if cookiecutter.setup_postgres_database == 'y' %}- postgres{% endif %}{% endif %}
+      {% if cookiecutter.setup_postgres_database == 'y' %}- postgres{% endif %}
+      {% if cookiecutter.setup_mongo_database == 'y' %}- mongo{% endif %}{% endif %}
   {{cookiecutter.frontend_app_name}}:
     restart: "no"
     build:
